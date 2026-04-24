@@ -15,7 +15,7 @@
 <div class="form-container">
     <h3>Describe Your Problem</h3>
     <textarea id="problemText" placeholder="Explain your issue here..."></textarea>
-    <button onclick="sendToWhatsapp()">SUBMIT</button>
+    <button onclick="sendToWhatsapp()">Send to WhatsApp</button>
 </div>
 
 <script>
@@ -35,10 +35,10 @@ function sendToWhatsapp() {
     let encodedMessage = encodeURIComponent("Hello! I have a problem: " + problem);
     
     // 4. Create the WhatsApp URL
-    let whatsappUrl = `https://wa.me/${9813132098}?text=${encodedMessage}`;
+    let whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     
     // 5. Open WhatsApp in a new tab
-    window.open("https://wa.me.9813132098", '_blank').focus();
+    window.open(whatsappUrl, '_blank').focus();
 }
 </script>
 
