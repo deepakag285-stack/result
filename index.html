@@ -6,11 +6,11 @@
     <style>
         body {
             margin: 0;
-            background: olive;
+            background: lightgray;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #1d304d;
             padding: 24px;
-            margin-top: 3cm;
+            margin-top: 5cm;
              width: 350px;
              margin-left: 2.5cm;
         }
@@ -103,11 +103,7 @@
             background: #e8f7e8;
             color: #1d5d2f;
         }
-h7{
-    color: black;
-    margin-left: 2cm;
-}
-        table.result-table tr.fail td {
+         table.result-table tr.fail td {
             background: #ffe8e8;
             color: #a71d1d;
         }
@@ -132,11 +128,10 @@ h7{
 <input type="date" id="dob" placeholder="Select DOB">
 <hr>
 <button onclick="searchResult()">Search</button>
-
+<hr>
 <div id="output" class="output-card"></div>
 <hr>
-<h7>class-10 result has been declared on 24 april 2026</h7>
-<script>
+ <script>
 async function searchResult() {
     const classValue = document.getElementById("classSelect").value;
     const roll = document.getElementById("rollno").value.trim();
