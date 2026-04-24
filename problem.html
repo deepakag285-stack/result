@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Describe Your Problem</title>
+    <style>
+        .form-container { max-width: 400px; margin: 20px auto; font-family: Arial; }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
+        button { background-color: #25D366; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: bold; }
+        button:hover { background-color: #128C7E; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h3>Describe Your Problem</h3>
+    <textarea id="problemText" placeholder="Explain your issue here..."></textarea>
+    <button onclick="sendToWhatsapp()">Send to WhatsApp</button>
+</div>
+
+<script>
+function sendToWhatsapp() {
+    // 1. Get the user's input
+    let problem = document.getElementById("problemText").value;
+    
+    // 2. Your WhatsApp number (International format, no + or 00)
+    let phoneNumber = "91XXXXXXXXXX"; // Example: 91 for India + 10-digit number
+    
+    if (problem.trim() === "") {
+        alert("Please describe your problem first!");
+        return;
+    }
+
+    // 3. Format the message for the URL
+    let encodedMessage = encodeURIComponent("Hello! I have a problem: " + problem);
+    
+    // 4. Create the WhatsApp URL
+    let whatsappUrl = `https://wa.me/${phoneNumber}?text=${wriye }`;
+    
+    // 5. Open WhatsApp in a new tab
+    window.open("https://wa.me/9813132098") ();
+}
+</script>
+
+</body>
+</html>
