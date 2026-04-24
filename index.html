@@ -6,13 +6,13 @@
     <style>
         body {
             margin: 0;
-            background: #f2f7ff;
+            background: olive;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #1d304d;
             padding: 24px;
             margin-top: 3cm;
-            height: 400px;
-            width: 350px;
+             width: 350px;
+             margin-left: 2.5cm;
         }
 
         h2 {
@@ -103,7 +103,10 @@
             background: #e8f7e8;
             color: #1d5d2f;
         }
-
+h7{
+    color: black;
+    margin-left: 2cm;
+}
         table.result-table tr.fail td {
             background: #ffe8e8;
             color: #a71d1d;
@@ -131,6 +134,8 @@
 <button onclick="searchResult()">Search</button>
 
 <div id="output" class="output-card"></div>
+<hr>
+<h7>class-10 result has been declared on 24 april 2026</h7>
 <script>
 async function searchResult() {
     const classValue = document.getElementById("classSelect").value;
