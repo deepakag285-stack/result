@@ -1,0 +1,224 @@
+ 
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result</title>
+    <style>
+        body {
+            margin: 0;
+            background: #f2f7ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1d304d;
+            padding: 24px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 18px;
+            color: #234075;
+        }
+
+        select,
+        input,
+        button {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px 14px;
+            margin: 8px 0;
+            border-radius: 12px;
+            border: 1px solid black;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        select {
+            background: linear-gradient(135deg, #d6efff 0%, #b2d8ff 100%);
+            color: #1b3656;
+            border: 1px solid #8bb9ff;
+        }
+
+        button {
+            background: linear-gradient(135deg, #3a8dff 0%, #1f5bd9 100%);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(31, 69, 153, 0.18);
+        }
+
+        .output-card {
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 18px;
+            background: gold;
+            color: purple;
+            gap: 2cm;
+            box-shadow: 0 18px 40px rgba(58, 92, 148, 0.1);
+        }
+
+        .message {
+            padding: 14px 16px;
+            border-radius: 14px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .success {
+            background: #e6f4ea;
+            color: purple;
+        }
+
+        .error {
+            background: #ffe8e8;
+            color: #a41b1b;
+        }
+
+        table.result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+        }
+
+        table.result-table th,
+        table.result-table td {
+            padding: 12px 14px;
+            border: 1px solid black
+        }
+
+        table.result-table th {
+            background: #1f6f54;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        table.result-table tr.pass td {
+            background: #e8f7e8;
+            color: #1d5d2f;
+        }
+
+        table.result-table tr.fail td {
+            background: #ffe8e8;
+            color: #a71d1d;
+        }
+
+        table.result-table tr:nth-child(even):not(.pass):not(.fail) td {
+            background: #f7f9ff;
+        }
+    </style>
+</head>
+<body>
+<!--for selectiong clsss-->
+<h2>Search Result by Roll Number</h2>
+<select id="classSelect">
+    <option value="">Select Class</option>
+    <option value="9">Class 9</option>
+    <option value="10">Class 10</option>
+    <option value="11">Class 11</option>
+    <option value="12">Class 12</option>
+</select>
+<hr>
+<input type="number" id="rollno" placeholder="Enter Roll Number">
+<input type="date" id="dob" placeholder="Select DOB">
+<hr>
+<button onclick="searchResult()">Search</button>
+
+<div id="output" class="output-card"></div>
+<script>
+async function searchResult() {
+    const classValue = document.getElementById("classSelect").value;
+    const roll = document.getElementById("rollno").value.trim();
+    const dob = document.getElementById("dob").value;
+
+    if (!classValue) {
+        document.getElementById("output").innerHTML = "<p style='color:red;'>Please select Class.</p>";
+        return;
+    }
+
+    if (!roll || !dob) {
+        document.getElementById("output").innerHTML = "<p style='color:red;'>Please enter both Roll No and DOB.</p>";
+        return;
+    }
+
+    const csvFiles = {
+        "9": "class9.csv",
+        "10": "class10.csv",
+        "11": "class11.csv",
+        "12": "class12.csv"
+    };
+
+    const csvFile = csvFiles[classValue] || "class12.csv";
+    const response = await fetch(csvFile);
+    const data = await response.text();
+
+    const rows = data.trim().split("\n").slice(1); // skip header
+
+    const formatCsvDob = csvDob => {
+        const parts = csvDob.trim().split("/");
+        if (parts.length !== 3) return csvDob.trim();
+        const [d, m, y] = parts;
+        return `${y.padStart(4, "0")}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    };
+
+    const markRow = (label, value) => {
+        const numeric = parseInt(value, 10);
+        const status = !isNaN(numeric) ? (numeric > 33 ? "pass" : "fail") : "";
+        return `<tr class="${status}"><th>${label}</th><td>${value || "N/A"}</td></tr>`;
+    };
+
+    const calculateMark = value => {
+        const numeric = parseInt(value, 10);
+        return !isNaN(numeric) ? numeric : 0;
+    };
+
+    let found = false;
+    let outputHtml = "";
+
+    rows.forEach(row => {
+        if (!row.trim()) return;
+        const cols = row.split(",");
+        const csvRoll = cols[0]?.trim();
+        const csvDob = formatCsvDob(cols[2] || "");
+
+        if (csvRoll === roll && csvDob === dob) {
+            const maths = calculateMark(cols[3]);
+            const science = calculateMark(cols[4]);
+            const english = calculateMark(cols[5]);
+            const total = maths + science + english;
+            const percentage = total / 300 * 100;
+            const passedSubjects = [maths, science, english].filter(mark => mark > 33).length;
+            const resultText = percentage > 33 && passedSubjects >= 2 ? "Pass" : "Fail";
+
+            const classText = `Class ${classValue}`;
+            outputHtml = `
+                <div class="message success">Result found for ${classText}</div>
+                <table class="result-table">
+                    <tr><th>Roll No</th><td>${cols[0]}</td></tr>
+                    <tr><th>Name</th><td>${cols[1]}</td></tr>
+                    <tr><th>DOB</th><td>${cols[2]}</td></tr>
+                    ${markRow("Maths", cols[3])}
+                    ${markRow("Science", cols[4])}
+                    ${markRow("English", cols[5])}
+                    <tr><th>Total</th><td>${total} / 300</td></tr>
+                    <tr><th>Percentage</th><td>${percentage.toFixed(2)}%</td></tr>
+                    <tr><th>Final Result</th><td>${resultText}</td></tr>
+                </table>
+            `;
+            found = true;
+        }
+    });
+
+    if (!found) {
+        outputHtml = "<p style='color:red;'>Student Not Found for selected class.</p>";
+    }
+
+    document.getElementById("output").innerHTML = outputHtml;
+}
+</script>
+
+</body>
+</html>
