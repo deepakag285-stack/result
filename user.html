@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Page</title>
+</head>
+<body>
+
+<h2>Available Items</h2>
+
+<div id="list"></div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("items")) || [];
+
+let html = "";
+
+data.forEach((d,i)=>{
+  html += `
+    <div>
+      <b>${i+1}. ${d.title}</b><br>
+      ${d.desc}<br>
+      ₹ ${d.price}<br>
+      <a href="https://wa.me/${d.whatsapp}" target="_blank">Contact on WhatsApp</a>
+      <hr>
+    </div>
+  `;
+});
+
+document.getElementById("list").innerHTML = html;
+</script>
+
+</body>
+</html>

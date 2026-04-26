@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+
+<h2>Admin Panel</h2>
+
+<form onsubmit="addData(); return false;">
+  <input id="title" placeholder="Title"><br><br>
+  <input id="desc" placeholder="Description"><br><br>
+  <input id="price" placeholder="Price"><br><br>
+  <input id="whatsapp" placeholder="WhatsApp Number (91xxxxxxxxxx)"><br><br>
+  <button>Add</button>
+</form>
+
+<h3>All Items</h3>
+<div id="list"></div>
+
+<script>
+if(localStorage.getItem("admin") !== "true"){
+  alert("Login First");
+  window.location = "login.html";
+}
+
+let data = JSON.parse(localStorage.getItem("items")) || [];
+
+function save(){
+  localStorage.setItem("items", JSON.stringify(data));
+}
+
+function addData(){
+  let item = {
+    title: title.value,
+    desc: desc.value,
+    price: price.value,
+    whatsapp: whatsapp.value
+  };
+
+  data.push(item);
+  save();
+  show();
+}
+
+function del(i){
+  data.splice(i,1);
+  save();
+  show();
+}
+
+function show(){
+  let html = "";
+  data.forEach((d,i)=>{
+    html += `
+      <div>
+        <b>${i+1}. ${d.title}</b><br>
+        ${d.desc}<br>
+        ₹ ${d.price}<br>
+        <a href="https://wa.me/${d.whatsapp}" target="_blank">WhatsApp</a><br>
+        <button onclick="del(${i})">Delete</button>
+        <hr>
+      </div>
+    `;
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+show();
+</script>
+
+</body>
+</html>
