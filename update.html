@@ -75,12 +75,7 @@ function addUser() {
   document.querySelectorAll("input").forEach(i => i.value = "");
 }
 
-function deleteUser(index) {
-  users.splice(index, 1);
-  localStorage.setItem("users", JSON.stringify(users));
-  showAdmin();
-  showUsers();
-}
+ 
 
 function showAdmin() {
   let html = "";
