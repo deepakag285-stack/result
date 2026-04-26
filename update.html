@@ -1,0 +1,122 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>User Management</title>
+  <style>
+    body { font-family: Arial; background:#f4f4f4; text-align:center; }
+    .box { background:#fff; padding:20px; margin:20px auto; width:350px; border-radius:10px; }
+    input { width:90%; padding:8px; margin:5px; }
+    button { padding:8px 15px; margin:5px; cursor:pointer; }
+    img { width:60px; height:60px; border-radius:50%; }
+  </style>
+</head>
+<body>
+
+<h2>User Management System</h2>
+
+<!-- LOGIN -->
+<div class="box" id="loginBox">
+  <h3>Admin Login</h3>
+  <input type="password" id="adminPass" placeholder="Enter Admin Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="box" id="adminPanel" style="display:none;">
+  <h3>Add User</h3>
+  <input id="name" placeholder="Name">
+  <input id="email" placeholder="Email">
+  <input id="phone" placeholder="Phone">
+  <input id="photo" placeholder="Photo URL">
+  <input id="password" type="password" placeholder="Password">
+  <button onclick="addUser()">Add User</button>
+  
+  <h3>All Users</h3>
+  <div id="adminList"></div>
+</div>
+
+<!-- USER VIEW -->
+<div class="box">
+  <h3>User View (Public)</h3>
+  <div id="userList"></div>
+</div>
+
+<script>
+const ADMIN_PASSWORD = "12345"; // ⚠️ visible in code (not secure)
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+function login() {
+  let pass = document.getElementById("adminPass").value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+    showAdmin();
+  } else {
+    alert("Wrong Password");
+  }
+}
+
+function addUser() {
+  let user = {
+    name: name.value,
+    email: email.value,
+    phone: phone.value,
+    photo: photo.value,
+    password: password.value // hidden in UI but not secure
+  };
+
+  users.push(user);
+  localStorage.setItem("users", JSON.stringify(users));
+  
+  showAdmin();
+  showUsers();
+
+  document.querySelectorAll("input").forEach(i => i.value = "");
+}
+
+function deleteUser(index) {
+  users.splice(index, 1);
+  localStorage.setItem("users", JSON.stringify(users));
+  showAdmin();
+  showUsers();
+}
+
+function showAdmin() {
+  let html = "";
+  users.forEach((u, i) => {
+    html += `
+      <div>
+        <img src="${u.photo}"><br>
+        ${u.name} <br>
+        ${u.email} <br>
+        ${u.phone} <br>
+        <button onclick="deleteUser(${i})">Delete</button>
+        <hr>
+      </div>
+    `;
+  });
+  document.getElementById("adminList").innerHTML = html;
+}
+
+function showUsers() {
+  let html = "";
+  users.forEach(u => {
+    html += `
+      <div>
+        <img src="${u.photo}"><br>
+        <b>${u.name}</b><br>
+        ${u.email}<br>
+        ${u.phone}
+        <hr>
+      </div>
+    `;
+  });
+  document.getElementById("userList").innerHTML = html;
+}
+
+showUsers();
+</script>
+
+</body>
+</html>
