@@ -1,0 +1,40 @@
+  <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+    <h2>Items</h2>
+
+<div id="items"></div>
+
+<script>
+let items = JSON.parse(localStorage.getItem("items") || "[]");
+
+let html="";
+items.forEach(item=>{
+    html+=`
+    <div>
+        <b>${item.title}</b> - ₹${item.price}<br>
+        ${item.desc}<br>
+        <button onclick="contact('${item.whatshap}')">order now</button>
+          <hr>
+    </div>`;
+});
+
+document.getElementById("items").innerHTML = html;
+function contact(number){
+    let url="https://wa.me/9813132098";
+    window.open(url,"_blank");
+}
+</script>
+
+ </body>
+ </html>

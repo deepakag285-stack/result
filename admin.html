@@ -4,18 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+                                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
  </head>
  <body>
-    
-  <h2>Admin Panel</h2>
+        <style>
+        body{
+            background-color: darkcyan;
+            box-shadow: 2px 2px 2px 2px green;
+            margin-top: 4cm;
+            margin-left: 0.5cm;
+        }
+        button{
+            margin-left: 2cm;
+        }
+        .card-header{
+            background-color: peru;
+        }
+        h2{
+            margin-left: 2cm;
+        }
+        h4{
+            margin-left: 0.5cm;
+        }
+    </style>
 
-<input id="title" placeholder="Title"><br><br>
-<input id="price" placeholder="Price"><br><br>
-<input id="desc" placeholder="Description"><br><br>
-<input id="wa" placeholder="WhatsApp link"><br><br>
-
-<button onclick="addItem()">Add Item</button>
-
+ <div class="card">
+ <div class="card-header">
+           <h2>Admin Panel</h2>
+    <div class="card-footer">
+<h4><input id="title" placeholder="शीर्षक"></h4><br>
+ <h4> <input id="price" placeholder="कीमत"><br></h4> 
+<h4><input id="desc" placeholder="वर्णन"><br></h4> 
+<h4><input id="wa" placeholder="WhatsApp नंबर"><br></h4> 
+    </div>
+    <button class="btn btn-success" onclick="addItem()">इसे कार्ट में जोड़ें</button>
+</div>
+ </div>
+ <hr>
 <div id="items"></div>
 
 <script>
@@ -30,9 +68,20 @@ function show(){
     items.forEach((item,i)=>{
         html+=`
         <div>
-            ${item.title} - ₹${item.price}
-            <button onclick="del(${i})">Delete</button>
-        </div>`;
+            <div class="card">
+                <div class="card-header">
+                    <h2>शीर्षक: ${item.title} </h2>
+                    <hr>
+                    <h2>कीमत:₹${item.price}</h2>
+                    <hr>
+                                <h2>वर्णन:${item.desc}</h3>
+                    </div>
+                    <div class="card-footer">
+                                    <button class="btn btn-dark" onclick="del(${i})">इस कार्ट को हटाएँ</button>
+                        </div>
+                </div>
+                <hr>
+         </div>`;
     });
     document.getElementById("items").innerHTML = html;
 }

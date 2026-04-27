@@ -1,40 +1,91 @@
+ 
  <!DOCTYPE html>
  <html lang="en">
  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+                         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="index.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
  </head>
  <body>
+          <h4>उपयोगकर्ताओं के लिए उपलब्ध स्टॉक</h4>
+
+      <div id="items"></div>
     <style>
-        a{
-            text-decoration: none;
+    #items{
+        color: white;
+        background-color: darkslategrey;
+    }
+    body{
+        margin-top: 1cm;
+    }
+    h3{
+        color: palevioletred;
+        margin-left: 1.5cm;
+    }
+    button{
+        margin-left: 3.5cm;
+        color: red;
+    }
+    h4{
+        margin-left: 2cm;
+        color: gold;
+    }
+    h2{
+        margin-left: 3cm;
+    }
+     hr{
+        color: white;
+        h4{
+            margin-left: 2cm;
         }
-    </style>
-    <h2>Items</h2>
-
-<div id="items"></div>
-
-<script>
+    }
+</style>
+ <script>
 let items = JSON.parse(localStorage.getItem("items") || "[]");
 
-let html="";
-items.forEach(item=>{
-    html+=`
-    <div>
-        <b>${item.title}</b> - ₹${item.price}<br>
-        ${item.desc}<br>
-        <button onclick="contact('${item.whatshap}')">order now</button>
-          <hr>
-    </div>`;
-});
+function show(){
+    let html = "";
 
-document.getElementById("items").innerHTML = html;
-function contact(number){
-    let url="https://wa.me/9813132098";
-    window.open(url,"_blank");
+    items.forEach(item=>{
+        html += `
+        <div style="border:1px solid red; padding:10px; margin:10px;">
+            <h2>शीर्षक</h2>
+            <h3>${item.title}</h3>
+            <hr>
+                        <h2>कीमत</h2>
+            <h3>₹${item.price}</h3>
+            <hr>
+            <h2>वर्णन</h2>
+            <h3>${item.desc}</h3>
+<hr>
+            <button class="btn btn-danger"onclick="contact('${item.whatsapp}')">
+                अभी खरीदें
+            </button>
+        </div>
+        `;
+    });
+
+    document.getElementById("items").innerHTML = html;
 }
-</script>
 
- </body>
- </html>
+function contact(num){
+    window.open("https://wa.me/9813132098?text=मुझे इस शीर्षक के बारे में और अधिक जानकारी चाहिए।");
+}
+
+show();
+</script>
+</body>
+</HTML>
