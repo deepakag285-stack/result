@@ -1,73 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Admin Panel</title>
-</head>
-<body>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    
+  <h2>Admin Panel</h2>
 
-<h2>Admin Panel</h2>
+<input id="title" placeholder="Title"><br><br>
+<input id="price" placeholder="Price"><br><br>
+<input id="desc" placeholder="Description"><br><br>
+<input id="wa" placeholder="WhatsApp link"><br><br>
 
-<form onsubmit="addData(); return false;">
-  <input id="title" placeholder="Title"><br><br>
-  <input id="desc" placeholder="Description"><br><br>
-  <input id="price" placeholder="Price"><br><br>
-  <input id="whatsapp" placeholder="WhatsApp Number (91xxxxxxxxxx)"><br><br>
-  <button>Add</button>
-</form>
+<button onclick="addItem()">Add Item</button>
 
-<h3>All Items</h3>
-<div id="list"></div>
+<div id="items"></div>
 
 <script>
 if(localStorage.getItem("admin") !== "true"){
-  alert("Login First");
-  window.location = "login.html";
+    location="login.html";
 }
 
-let data = JSON.parse(localStorage.getItem("items")) || [];
+let items = JSON.parse(localStorage.getItem("items") || "[]");
 
-function save(){
-  localStorage.setItem("items", JSON.stringify(data));
+function show(){
+    let html="";
+    items.forEach((item,i)=>{
+        html+=`
+        <div>
+            ${item.title} - ₹${item.price}
+            <button onclick="del(${i})">Delete</button>
+        </div>`;
+    });
+    document.getElementById("items").innerHTML = html;
 }
 
-function addData(){
-  let item = {
-    title: title.value,
-    desc: desc.value,
-    price: price.value,
-    whatsapp: whatsapp.value
-  };
+function addItem(){
+    let item = {
+        title:title.value,
+        price:price.value,
+        desc:desc.value,
+        whatsapp:wa.value
+    };
 
-  data.push(item);
-  save();
-  show();
+    items.push(item);
+    localStorage.setItem("items", JSON.stringify(items));
+    show();
 }
 
 function del(i){
-  data.splice(i,1);
-  save();
-  show();
+    items.splice(i,1);
+    localStorage.setItem("items", JSON.stringify(items));
+    show();
 }
-
-function show(){
-  let html = "";
-  data.forEach((d,i)=>{
-    html += `
-      <div>
-        <b>${i+1}. ${d.title}</b><br>
-        ${d.desc}<br>
-        ₹ ${d.price}<br>
-        <a href="https://wa.me/${d.whatsapp}" target="_blank">WhatsApp</a><br>
-        <button onclick="del(${i})">Delete</button>
-        <hr>
-      </div>
-    `;
-  });
-  document.getElementById("list").innerHTML = html;
-}
-
 show();
-</script>
+ </script>
+ </body>
+ </html>
 
-</body>
-</html>

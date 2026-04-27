@@ -1,33 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>User Page</title>
-</head>
-<body>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+    <h2>Items</h2>
 
-<h2>Available Items</h2>
-
-<div id="list"></div>
+<div id="items"></div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("items")) || [];
+let items = JSON.parse(localStorage.getItem("items") || "[]");
 
-let html = "";
-
-data.forEach((d,i)=>{
-  html += `
+let html="";
+items.forEach(item=>{
+    html+=`
     <div>
-      <b>${i+1}. ${d.title}</b><br>
-      ${d.desc}<br>
-      ₹ ${d.price}<br>
-      <a href="https://wa.me/${d.whatsapp}" target="_blank">Contact on WhatsApp</a>
-      <hr>
-    </div>
-  `;
+        <b>${item.title}</b> - ₹${item.price}<br>
+        ${item.desc}<br>
+        <button onclick="contact('${item.whatshap}')">order now</button>
+          <hr>
+    </div>`;
 });
 
-document.getElementById("list").innerHTML = html;
+document.getElementById("items").innerHTML = html;
+function contact(number){
+    let url="https://wa.me/9813132098";
+    window.open(url,"_blank");
+}
 </script>
 
-</body>
-</html>
+ </body>
+ </html>

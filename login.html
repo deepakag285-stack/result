@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Admin Login</title>
-</head>
-<body>
+ 
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <body>
+    
+  <h2>Admin Login</h2>
 
-<h2>Admin Login</h2>
-
-<input id="id" placeholder="Enter ID"><br><br>
-<input id="pass" type="password" placeholder="Enter Password"><br><br>
+<input id="id" placeholder="ID"><br><br>
+<input id="pass" type="password" placeholder="Password"><br><br>
 
 <button onclick="login()">Login</button>
 
 <script>
-const ADMIN_ID = "admin";
-const ADMIN_PASS = "12345";
+async function login(){
+    let res = await fetch("admin.json");
+    let data = await res.json();
 
-function login(){
-  let id = document.getElementById("id").value;
-  let pass = document.getElementById("pass").value;
-
-  if(id === ADMIN_ID && pass === ADMIN_PASS){
-    localStorage.setItem("admin","true");
-    window.location = "admin.html";
-  } else {
-    alert("Wrong ID or Password");
-  }
+    if(id.value === data.id && pass.value === data.pass){
+        localStorage.setItem("admin","true");
+        window.location = "admin.html";
+    } else {
+        alert("Wrong login");
+    }
 }
 </script>
-</body>
-</html>
+ </body>
+ </html>
