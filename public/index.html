@@ -128,6 +128,21 @@
     </style>
 </head>
 <body>
+    <div id="data"></div>
+
+<script>
+fetch("/buyers")
+.then(res => res.json())
+.then(data => {
+    data.forEach(b => {
+        document.getElementById("data").innerHTML += `
+        <div>
+            <b>${b.name}</b> - ${b.comment}
+        </div>`;
+    });
+});
+</script>
+
     <a href="buyer.html">see buyer details</a>
      <!--for selectiong clsss-->
 <h2>Search Result by Roll Number & DOB</h2>
